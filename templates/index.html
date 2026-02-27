@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prescription Translator</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            width: 400px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Prescription Translator</h2>
+
+    <form method="POST" action="/process">
+        <label>Medicine</label>
+        <input type="text" name="medicine" required>
+
+        <label>Dosage (mg)</label>
+        <input type="number" name="dosage" required>
+
+        <label>Frequency (times per day)</label>
+        <input type="number" name="frequency" required>
+
+        <label>Duration (days)</label>
+        <input type="number" name="duration" required>
+
+        <button type="submit">Process</button>
+    </form>
+
+    {% if result %}
+    <div class="output">
+        <h3>Output:</h3>
+        <p><b>English:</b> {{ result.english_explanation }}</p>
+<audio controls>
+    <source src="{{ url_for('static', filename='english_audio.mp3') }}" type="audio/mpeg">
+</audio>
+
+<p><b>Telugu:</b> {{ result.telugu_text }}</p>
+<audio controls>
+    <source src="{{ url_for('static', filename='telugu_audio.mp3') }}" type="audio/mpeg">
+</audio>
+
+<p><b>Hindi:</b> {{ result.hindi_text }}</p>
+<audio controls>
+    <source src="{{ url_for('static', filename='hindi_audio.mp3') }}" type="audio/mpeg">
+</audio>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
